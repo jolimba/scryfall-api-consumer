@@ -1,11 +1,8 @@
-import express, { Request, Response } from 'express';
+import 'reflect-metadata';
+import { app } from './app';
 
-const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('ok');
-});
-
-app.listen(3000, () => {
-  console.log('Server running on 3000');
+app.listen(PORT, () => {
+    console.log('### BUILD NOVO ###');
 });
