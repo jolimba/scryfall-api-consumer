@@ -13,7 +13,6 @@ The system consists of two parts:
   *“I want a white card that has 'rabbit' in its text and less than 4 power, for my Baylen deck”*  
 - Returns up to 10 random cards that match the criteria.  
 - Built with **Express**, **BullMQ**, and **Redis** for job queuing.  
-- Uses **TypeORM** for database interactions (if applicable).  
 
 ## Quick Start
 
