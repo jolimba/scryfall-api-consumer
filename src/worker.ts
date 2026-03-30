@@ -16,10 +16,10 @@ new Worker('mtg', async job => {
             result = JSON.parse(data);
             break;
         }
-        await new Promise(r => setTimeout(r, 200)); // 200ms
+        await new Promise(r => setTimeout(r, 200)); //200ms
     }
     if (!result) {
         throw new Error('timeout waiting python result');
     }
-    return result; // <- vai pro controller
+    return result;
 });

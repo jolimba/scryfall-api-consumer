@@ -13,7 +13,7 @@ export class OracleMTGController {
       'mtg-fetch',
       {
         requestId,
-        text: req.body.message // corrigido
+        text: req.body.message
       },
       {
         attempts: 3,
