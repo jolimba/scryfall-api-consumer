@@ -1,6 +1,8 @@
-import Redis from 'ioredis';
+import Redis, { RedisOptions } from 'ioredis';
 
-export const redis = new Redis({
+export const redisConfig: RedisOptions = {
   host: 'redis',
-  port: 6379
-});
+  port: 6379,
+};
+
+export const redis = new Redis(redisConfig);

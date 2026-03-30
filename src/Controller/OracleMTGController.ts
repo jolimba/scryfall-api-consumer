@@ -1,17 +1,42 @@
-import { CreateRequestService } from '../Service/CreateRequest.service';
 import { Request, Response } from 'express';
-import { redis } from '../data/Redis.client';
-
-const createRequest: CreateRequestService = new CreateRequestService();
+import { Queue, QueueEvents } from 'bullmq';
+import { randomUUID } from 'crypto';
 
 export class OracleMTGController {
-    static async oracleMTGListRedis(req: Request, res: Response) {
-        console.log(req.body);
-        await redis.xadd(
-            'stream:MTGRequest',
-            '*',
-            'request', req.body.request,
-            'request_id', req.body.id
-        );
+  constructor(
+    private queue: Queue,
+    private queueEvents: QueueEvents
+  ) {}
+  async oracleMTGListRedis(req: Request, res: Response): Promise<Response> {
+    const requestId = randomUUID();
+    const job = await this.queue.add(
+      'mtg-fetch',
+      {
+        requestId,
+        text: req.body.message // corrigido
+      },
+      {
+        attempts: 3,
+        backoff: {
+          type: 'exponential',
+          delay: 500
+        },
+        removeOnComplete: true,
+        removeOnFail: true
+      }
+    );
+    try {
+      const result = await job.waitUntilFinished(this.queueEvents);
+
+      return res.json({
+        requestId,
+        result
+      });
+    } catch {
+      return res.status(504).json({
+        requestId,
+        error: 'timeout or worker failed'
+      });
     }
+  }
 }

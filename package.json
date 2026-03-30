@@ -22,7 +22,10 @@
   },
   "homepage": "https://github.com/jolimba/scryfall-api-consumer#readme",
   "dependencies": {
+    "@bull-board/api": "^6.20.6",
+    "@bull-board/express": "^6.20.6",
     "axios": "^1.13.6",
+    "bullmq": "^5.71.0",
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "helmet": "^8.1.0",
